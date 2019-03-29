@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localSQL
-Source Server Version : 50723
-Source Host           : localhost:3306
+Source Server         : linuxSQL
+Source Server Version : 50724
+Source Host           : 47.94.2.98:3306
 Source Database       : grade
 
 Target Server Type    : MYSQL
-Target Server Version : 50723
+Target Server Version : 50724
 File Encoding         : 65001
 
-Date: 2019-01-20 02:25:31
+Date: 2019-03-29 11:02:52
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -70,14 +70,13 @@ CREATE TABLE `student` (
   `score` int(2) NOT NULL,
   `marker` varchar(255) NOT NULL,
   PRIMARY KEY (`studentId`)
-) ENGINE=InnoDB AUTO_INCREMENT=997646 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=330720 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
 -- Records of student
 -- ----------------------------
-INSERT INTO `student` VALUES ('1', 'a', 'a', '1450318612@qq.com', 'a', 'The student has no comments', '1', 'dd');
-INSERT INTO `student` VALUES ('2', 'b', 'b', '9', 'b', 'The student has no comments', '1', 'dd');
-INSERT INTO `student` VALUES ('3', 'c', 'c', '1191134106@qq.com', 'c', 'The student has no comments', '1', 'dd');
+INSERT INTO `student` VALUES ('1', 'a', 'a', 'sgwdong@gmail.com', 'a', 'The student has no comments', '1', 'marker1');
+INSERT INTO `student` VALUES ('2', 'b', 'b', '1191134106@qq.com', 'b', 'The student has no comments', '1', 'dd');
 INSERT INTO `student` VALUES ('4', 'd', 'd', '11', 'd', 'The student has no comments', '1', 'dd');
 INSERT INTO `student` VALUES ('5', 'e', 'e', '12', 'e', 'The student has no comments', '1', 'dd');
 INSERT INTO `student` VALUES ('6', 'a', 'f', '13', 'f', 'The student has no comments', '1', 'dd');
@@ -116,9 +115,11 @@ INSERT INTO `student` VALUES ('565', '88', '88', '88', '88', 'The student has no
 INSERT INTO `student` VALUES ('2322', '99', '99', '1450318612@qq.com', '99', '99', '8', '00');
 INSERT INTO `student` VALUES ('111444', 'qq', 'ww', '1450318612@qq.com', '1', 'jaja', '4', 'user');
 INSERT INTO `student` VALUES ('112322', '99', '99', '14503186121@qq.com', '99', '99', '8', 'user');
+INSERT INTO `student` VALUES ('123456', 'ABC', 'Alice', 'sgwdong@gmail.com', 'abc', 'Good try', '8', 'Mark');
 INSERT INTO `student` VALUES ('157689', 'a', 'a', '1', 'a', 'The student has no comments', '1', 'dd');
 INSERT INTO `student` VALUES ('186527', 'b', 'b', '2', 'b', 'The student has no comments', '1', 'dd');
 INSERT INTO `student` VALUES ('215366', 'c', 'c', '3', 'c', 'The student has no comments', '1', 'dd');
+INSERT INTO `student` VALUES ('234567', 'BCD', 'Bob', '3033243093@qq.com', 'bcd', 'Terrible', '4', 'Mark');
 INSERT INTO `student` VALUES ('244204', 'd', 'd', '4', 'd', 'The student has no comments', '1', 'dd');
 INSERT INTO `student` VALUES ('273042', 'e', 'e', '5', 'e', 'The student has no comments', '1', 'dd');
 INSERT INTO `student` VALUES ('301881', 'f', 'f', '6', 'f', 'The student has no comments', '1', 'dd');
@@ -156,7 +157,7 @@ CREATE TABLE `sys_resource` (
   `parent_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK3fekum3ead5klp7y4lckn5ohi` (`parent_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=190 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=188 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_resource
@@ -185,6 +186,7 @@ INSERT INTO `sys_resource` VALUES ('183', null, 'studentList', '1', '/student/se
 INSERT INTO `sys_resource` VALUES ('184', null, 'uploadExcel', '1', '/resource/uploadExcel', '1', '/resource/uploadExcel', '183');
 INSERT INTO `sys_resource` VALUES ('185', null, 'markerDeleteStudent', '2', '/student/delete', '1', '/student/delete', '183');
 INSERT INTO `sys_resource` VALUES ('186', null, 'modify', '1', '/student/changeStu', '1', '/student/changeStu', '183');
+INSERT INTO `sys_resource` VALUES ('187', null, 'statistic', '1', '/student/getStatistic', '0', '/student/getStatistic', '179');
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -196,7 +198,7 @@ CREATE TABLE `sys_role` (
   `description` varchar(255) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_role
@@ -219,6 +221,10 @@ CREATE TABLE `sys_role_resources` (
 -- ----------------------------
 -- Records of sys_role_resources
 -- ----------------------------
+INSERT INTO `sys_role_resources` VALUES ('29', '182');
+INSERT INTO `sys_role_resources` VALUES ('29', '183');
+INSERT INTO `sys_role_resources` VALUES ('29', '184');
+INSERT INTO `sys_role_resources` VALUES ('29', '185');
 INSERT INTO `sys_role_resources` VALUES ('1', '2');
 INSERT INTO `sys_role_resources` VALUES ('1', '3');
 INSERT INTO `sys_role_resources` VALUES ('1', '6');
@@ -234,14 +240,10 @@ INSERT INTO `sys_role_resources` VALUES ('1', '8');
 INSERT INTO `sys_role_resources` VALUES ('1', '11');
 INSERT INTO `sys_role_resources` VALUES ('1', '14');
 INSERT INTO `sys_role_resources` VALUES ('1', '150');
-INSERT INTO `sys_role_resources` VALUES ('1', '178');
 INSERT INTO `sys_role_resources` VALUES ('1', '179');
 INSERT INTO `sys_role_resources` VALUES ('1', '180');
 INSERT INTO `sys_role_resources` VALUES ('1', '181');
-INSERT INTO `sys_role_resources` VALUES ('29', '182');
-INSERT INTO `sys_role_resources` VALUES ('29', '183');
-INSERT INTO `sys_role_resources` VALUES ('29', '184');
-INSERT INTO `sys_role_resources` VALUES ('29', '185');
+INSERT INTO `sys_role_resources` VALUES ('1', '187');
 
 -- ----------------------------
 -- Table structure for sys_user
@@ -258,7 +260,7 @@ CREATE TABLE `sys_user` (
   `tel` varchar(255) DEFAULT NULL,
   `sex_type` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_user
@@ -267,6 +269,7 @@ INSERT INTO `sys_user` VALUES ('1', '2017-07-11 17:42:18', '$2a$10$SIU57gfkh/TsI
 INSERT INTO `sys_user` VALUES ('23', '2019-01-10 13:18:55', '$2a$10$Q74mtX6pmKerfSyEeJtP8etAEd2qDLGWUzpz5UGECtn09tumLNFWC', '2019-01-11 13:08:29', 'admin1', '\0', '', '', '0');
 INSERT INTO `sys_user` VALUES ('24', '2019-01-19 02:05:14', '$2a$10$IOOxGqOFyFYfGzgztQ.1FOzHjrDVHGq.5VPL7dcwLVcy/N/iAenDe', '2019-01-19 02:05:14', 'user', '', '1450318612@qq.com', '139201211597', '1');
 INSERT INTO `sys_user` VALUES ('26', '2019-01-19 12:18:33', '$2a$10$88KT7Qa3Xba1aNZ2VzpX8uFlRq.GPLZ5rjsCfXOUh6stVJIBvULhG', '2019-01-19 12:18:33', 'test', '\0', '', '', '1');
+INSERT INTO `sys_user` VALUES ('27', '2019-01-26 08:18:17', '$2a$10$pD/D7/SDhBo2BQNmUMBOweVE7ZzzhFRV6//INgQQPBIJTsoPJwdOu', '2019-01-26 08:18:17', 'user_Wendy', '', '', '', '0');
 
 -- ----------------------------
 -- Table structure for sys_user_roles
@@ -285,3 +288,4 @@ CREATE TABLE `sys_user_roles` (
 INSERT INTO `sys_user_roles` VALUES ('1', '1');
 INSERT INTO `sys_user_roles` VALUES ('23', '29');
 INSERT INTO `sys_user_roles` VALUES ('24', '29');
+INSERT INTO `sys_user_roles` VALUES ('27', '29');
