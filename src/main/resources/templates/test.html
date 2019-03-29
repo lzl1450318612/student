@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>上传excel文件</title>
+</head>
+<body>
+<!--上传文件input-->
+<form action="http://localhost:8080/excel" enctype="multipart/form-data" method="post">
+    上传文件：<input type="file" name = "excel_input" accept=".xls,.xlsx">
+    <input type="submit" value="提交">
+    <a href="http://localhost:8080/downloadExcel">导出excel</a>
+</form>
+</body>
+</html>

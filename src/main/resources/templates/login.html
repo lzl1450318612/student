@@ -1,0 +1,85 @@
+﻿<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8"/>
+<meta name="renderer" content="webkit|ie-comp|ie-stand"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<!--[if lt IE 9]>
+<script type="text/javascript" th:src="@{/lib/html5shiv.js}" src="lib/html5shiv.js"></script>
+<script type="text/javascript" th:src="@{/lib/respond.min.js}" src="lib/respond.min.js"></script>
+<![endif]-->
+<link th:href="@{/h-ui/css/H-ui.min.css}" href="static/h-ui/css/H-ui.min.css" rel="stylesheet" type="text/css" />
+<link th:href="@{/h-ui.admin/css/H-ui.login.css}" href="static/h-ui.admin/css/H-ui.login.css" rel="stylesheet" type="text/css" />
+<link th:href="@{/h-ui.admin/css/style.css}" href="static/h-ui.admin/css/style.css" rel="stylesheet" type="text/css" />
+<link th:href="@{/lib/Hui-iconfont/1.0.8/iconfont.css}" href="lib/Hui-iconfont/1.0.8/iconfont.css" rel="stylesheet" type="text/css" />
+<!--[if IE 6]>
+<script type="text/javascript" th:src="@{/lib/DD_belatedPNG_0.0.8a-min.js}" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script>
+<![endif]-->
+<title>Marking Assist System</title>
+<script type="text/javascript">
+if(window!=top){
+	window.top.location.reload();
+}
+</script>
+</head>
+<body>
+<input type="hidden" id="TenantId" name="TenantId" value="" />
+<div style="float:left;position:fixed;z-index:1000;color:white;font-size:19px;padding-left:50px;line-height:50px;background:linear-gradient(to right,#232526 ,#414345);width: 100%;height: 50px;">Marking Assist System</div>
+
+<div class="loginWraper">
+  <div id="loginform" class="loginBox">
+<!--     <p th:if="${param.logout}" class="alert">您已退出登录</p> -->
+<!-- 	<p th:if="${param.error}" th:text="${session.validatecode_error}" class="alert alert-error">There was an error, please try again</p> -->
+    <div style="color:white;font-size: 30px;text-align: center;">Login</div>
+    <form name="form" th:action="@{/login}" action="/login" method="POST">
+      <fieldset style="border: none;margin-top: 20px;">
+      <div class="row cl">
+        <label class="form-label col-xs-3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="Hui-iconfont">&#xe60d;</i></label>
+        <div class="formControls col-xs-8">
+          <input name="username" type="text" placeholder="Username" class="input-text size-L"/>
+        </div>
+      </div>
+      <div class="row cl">
+        <label class="form-label col-xs-3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="Hui-iconfont">&#xe60e;</i></label>
+        <div class="formControls col-xs-8">
+          <input name="password" type="password" placeholder="Password" class="input-text size-L"/>
+        </div>
+      </div>
+<!--       <div class="row cl"> -->
+<!--         <div class="formControls col-xs-8 col-xs-offset-3"> -->
+<!--           <input name="validateCode" id="validateCode" class="input-text size-L" type="text" placeholder="验证码" onblur="if(this.value==''){this.value='验证码:'}" onclick="if(this.value=='验证码:'){this.value='';}" value="验证码:" style="width:150px;"/> -->
+<!--           <img th:src="@{/kaptcha/getKaptchaImage}" src="" alt="验证码" title="看不清？点击换另一张" onclick="RefreshCode(this)" />  </div> -->
+<!--       </div> -->
+      <div class="row cl">
+        <div class="formControls col-xs-8 col-xs-offset-3">
+
+	<p style="color:#fff;" th:if="${param.error}" th:text="${session.validatecode_error}" class="alert alert-error">There was an error, please try again</p>
+<!--           <label for="online"> -->
+<!--             <input type="checkbox" id="rememberme" name="remember-me"/> -->
+<!--                                       使我保持登录状态</label> -->
+        </div>
+      </div>
+      </fieldset>
+      <div class="row cl">
+        <div class="formControls col-xs-8 col-xs-offset-3">
+          <input name="" type="submit" style="margin-left: 40px;margin-right: 40px;" class="btn btn-success radius size-L" value="&nbsp;Login&nbsp;"/>
+          <input name="" type="reset" class="btn btn-default radius size-L" value="&nbsp;Cancel&nbsp;"/>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div style="font-size: 70px;color:#414345;margin-top: 400px;margin-left: 200px;float: left;z-index: 10000;position: absolute;">Welcome</div>
+<!-- <div class="footer">Copyright 保定市腾骏网络信息科技有限公司</div> -->
+<script type="text/javascript" th:src="@{/lib/jquery/1.9.1/jquery.min.js}" src="lib/jquery/1.9.1/jquery.min.js"></script> 
+<script type="text/javascript" th:src="@{/h-ui/js/H-ui.min.js}" src="h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript">
+function RefreshCode(obj){
+    obj.src = obj.src + "?code=" + Math.random();
+}
+</script>
+</body>
+</html>

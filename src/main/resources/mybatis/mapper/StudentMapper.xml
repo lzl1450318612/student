@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiongantaoli.grade.mapper.StudentMapper" >
+    <resultMap id="BaseResultMap" type="com.xiongantaoli.grade.entity.Student" >
+        <id column="studentId" property="studentid" jdbcType="BIGINT" />
+        <result column="surName" property="surname" jdbcType="VARCHAR" />
+        <result column="givenName" property="givenname" jdbcType="VARCHAR" />
+        <result column="email" property="email" jdbcType="VARCHAR" />
+        <result column="userName" property="username" jdbcType="VARCHAR" />
+        <result column="markerComments" property="markercomments" jdbcType="VARCHAR" />
+        <result column="score" property="score" jdbcType="INTEGER" />
+        <result column="marker" property="marker" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <resultMap id="MarkerResultMap" type="com.xiongantaoli.grade.entity.Marker">
+        <result column="marker" property="marker" jdbcType="VARCHAR" />
+        <result column="average" property="average" />
+    </resultMap>
+
+    <resultMap id="StudentsOfScoreResultMap" type="com.xiongantaoli.grade.entity.StudentsOfScore">
+        <result column="score" property="score" jdbcType="INTEGER" />
+        <result column="studentNum" property="studentNum" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+    studentId, surName, givenName, email, userName, markerComments, score, marker
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+        select
+        <include refid="Base_Column_List" />
+        from student
+        where studentId = #{studentid,jdbcType=BIGINT}
+    </select>
+    <!--查询所有学生平均分-->
+    <select id="selectAllAverage" resultType="java.lang.Double">
+        select
+        avg(score)
+        from student
+    </select>
+
+    <!--查询某个判卷人所判学生的平均分-->
+    <select id="selectSelfAverage" resultType="java.lang.Double" parameterType="java.lang.String" >
+        select
+        avg(score)
+        from student
+        where marker = #{markerName,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectAllMarkerAverage" resultMap="MarkerResultMap">
+        select distinct marker,AVG(score) as average from student group by marker
+    </select>
+
+    <select id="selectStudentsOfScore" resultMap="StudentsOfScoreResultMap">
+        select distinct score,count(*) as studentNum from student group by score;
+    </select>
+
+    <select id="selectByMarkerName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+        select
+        <include refid="Base_Column_List" />
+        from student
+        where marker = #{markerName,jdbcType=VARCHAR}
+    </select>
+    <!-- 查询所有学生 -->
+    <select id="selectAllStudent" resultMap="BaseResultMap" parameterType="com.xiongantaoli.grade.entity.Student" >
+        select
+        <include refid="Base_Column_List" />
+        from student
+    </select>
+    <select id="selectStudent" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from student
+        where 1=1
+        <if test="student.studentid != null and student.studentid !=''" >
+            and studentId = #{student.studentid,jdbcType=BIGINT}
+        </if>
+        <if test="student.marker != null and student.marker !=''" >
+            and marker like '%${student.marker}%'
+        </if>
+        <if test="startScore != null and startScore !=''">
+            <![CDATA[ and score >= #{startScore,jdbcType=INTEGER} ]]>
+        </if>
+        <if test="endScore != null and endScore !=''">
+            <![CDATA[ and score <= #{endScore,jdbcType=INTEGER} ]]>
+        </if>
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from student
+    where studentId = #{studentid,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.xiongantaoli.grade.entity.Student" >
+    insert into student (studentId, surName, givenName,
+      email, userName, markerComments,
+      score, marker)
+    values (#{studentid,jdbcType=BIGINT}, #{surname,jdbcType=VARCHAR}, #{givenname,jdbcType=VARCHAR},
+      #{email,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{markercomments,jdbcType=VARCHAR},
+      #{score,jdbcType=INTEGER}, #{marker,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.xiongantaoli.grade.entity.Student" >
+        insert into student
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="studentid != null" >
+                studentId,
+            </if>
+            <if test="surname != null" >
+                surName,
+            </if>
+            <if test="givenname != null" >
+                givenName,
+            </if>
+            <if test="email != null" >
+                email,
+            </if>
+            <if test="username != null" >
+                userName,
+            </if>
+            <if test="markercomments != null" >
+                markerComments,
+            </if>
+            <if test="score != null" >
+                score,
+            </if>
+            <if test="marker != null" >
+                marker,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="studentid != null" >
+                #{studentid,jdbcType=BIGINT},
+            </if>
+            <if test="surname != null" >
+                #{surname,jdbcType=VARCHAR},
+            </if>
+            <if test="givenname != null" >
+                #{givenname,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null" >
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="username != null" >
+                #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="markercomments != null" >
+                #{markercomments,jdbcType=VARCHAR},
+            </if>
+            <if test="score != null" >
+                #{score,jdbcType=INTEGER},
+            </if>
+            <if test="marker != null" >
+                #{marker,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.xiongantaoli.grade.entity.Student" >
+        update student
+        <set >
+            <if test="surname != null" >
+                surName = #{surname,jdbcType=VARCHAR},
+            </if>
+            <if test="givenname != null" >
+                givenName = #{givenname,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null" >
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="username != null" >
+                userName = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="markercomments != null" >
+                markerComments = #{markercomments,jdbcType=VARCHAR},
+            </if>
+            <if test="score != null" >
+                score = #{score,jdbcType=INTEGER},
+            </if>
+            <if test="marker != null" >
+                marker = #{marker,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where studentId = #{studentid,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.xiongantaoli.grade.entity.Student" >
+    update student
+    set surName = #{surname,jdbcType=VARCHAR},
+      givenName = #{givenname,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      userName = #{username,jdbcType=VARCHAR},
+      markerComments = #{markercomments,jdbcType=VARCHAR},
+      score = #{score,jdbcType=INTEGER},
+      marker = #{marker,jdbcType=VARCHAR}
+    where studentId = #{studentid,jdbcType=BIGINT}
+  </update>
+</mapper>

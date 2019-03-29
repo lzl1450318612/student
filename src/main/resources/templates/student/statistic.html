@@ -1,0 +1,136 @@
+<!DOCTYPE HTML>
+<html  xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:include="_meta :: header">
+    <meta charset="utf-8"/>
+
+    <title>Marking Assist System</title>
+</head>
+<body>
+
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> Home <span class="c-gray en">&gt;</span> Marking Assist System <span class="c-gray en">&gt;</span> Statistic <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:window.location.href='/student/list';" title="refresh" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<h1 style="padding-left: 20px;">Markers' Average</h1>
+<div id="markerPic" style="margin-left:100px;width: 600px;height:400px;"></div>
+<h1 style="padding-left: 20px;">Students within the score range</h1>
+<div id="studentPic" style="margin-left:100px;width: 1000px;height:400px;"></div>
+<!--_footer 作为公共模版分离出去-->
+<div th:replace="_footer :: footerjs">
+</div>
+<script type="text/javascript" th:src="@{/lib/echarts.common.min.js}" src="lib/echarts.common.min.js"></script>
+<script th:if="${statistic}!=''" th:inline="javascript">
+
+    /*<![CDATA[*/
+    var studentScoreList = [[${statistic.getStudentsOfScores()}]];
+    var markerList = [[${statistic.getMarker()}]];
+    var markerScoreArr = new Array();
+    var markerNameArr = new Array();
+    for (var i = 0; i < markerList.length; i++)
+    {
+      markerNameArr[i] = markerList[i].marker;
+      markerScoreArr[i] =  markerList[i].average;
+    }
+
+    // var studentScoreArr = new Array();
+    // var studentNameArr = new Array();
+    // for (var i = 0; i < studentList.length; i++)
+    // {
+    //     studentScoreArr[i] = studentList[i].score;
+    //     studentNameArr[i] = studentList[i].studentNum;
+    // }
+
+
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('markerPic'));
+
+    // 指定图表的配置项和数据
+    option = {
+        color: ['#3398DB'],
+        tooltip : {
+            trigger: 'axis',
+            axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+            }
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis : [
+            {
+                type : 'category',
+                data : markerNameArr,
+                axisTick: {
+                    alignWithLabel: true
+                }
+            }
+        ],
+        yAxis : [
+            {
+                type : 'value'
+            }
+        ],
+        series : [
+            {
+                name:'Markers\' Average',
+                type:'bar',
+                barWidth: '60%',
+                data:markerScoreArr
+            }
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+
+
+    var myChart2 = echarts.init(document.getElementById('studentPic'));
+
+    // 指定图表的配置项和数据
+    option2 = {
+        color: ['#3398DB'],
+        tooltip : {
+            trigger: 'axis',
+            axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+            }
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis : [
+            {
+                type : 'category',
+                data : ['0.0-1.0','1.0-2.0','2.0-3.0','3.0-4.0','4.0-5.0','5.0-6.0','6.0-7.0','7.0-8.0','8.0-9.0','9.0-10.0'],
+                axisTick: {
+                    alignWithLabel: true
+                }
+            }
+        ],
+        yAxis : [
+            {
+                type : 'value'
+            }
+        ],
+        series : [
+            {
+                name:'Students within the score range',
+                type:'bar',
+                barWidth: '60%',
+                data:[[${statistic.getStudentsOfScores()}]]
+            }
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart2.setOption(option2);
+    /*]]>*/
+</script>
+<script th:if="${statistic}==''">
+    layer.message("No Data!")
+</script>
+</body>
+</html>
